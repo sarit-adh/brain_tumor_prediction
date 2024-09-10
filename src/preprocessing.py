@@ -14,9 +14,9 @@ def validate_data():
     plt.show()
 
 
-def get_preprocessed_data():
+def get_preprocessed_data(root_data_folder):
 
-    X, y = load_data(type=0)
+    X, y = load_data(type=0, root_data_folder=root_data_folder)
 
     # Split dataset into training and test sets
     X_train, X_test, y_train, y_test = train_test_split(

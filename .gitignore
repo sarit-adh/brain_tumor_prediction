@@ -1,6 +1,9 @@
 # Ignore data directory
 /data/
 
+#Ignore saved models
+/trained_models/
+
 # Ignore environment variable file
 .env
 

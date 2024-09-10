@@ -24,16 +24,17 @@ def create_dataset(positive_images_folder, negative_images_folder):
     y = to_categorical(y, num_classes=2)
     return X, y
 
-def load_data(type):
+def load_data(type=0, root_data_folder=None):
     '''
         type 0 : RAW
         type 1 : processed
         type 2 : external
     '''
-    if type== 0:
+    if type== 0 and root_data_folder is None:
         root_data_folder = "../data/raw/"
 
-    elif type==1:
+
+    elif type==1 and root_data_folder is None:
         root_data_folder = "../data/processed/"
 
     else:

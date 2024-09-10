@@ -54,8 +54,18 @@ class Model(object):
         self.trained_model.save(file_path)
         
     def load_model(self, directory):
-        file_path = os.path.join(directory, f"{self.model_type}_{self.epochs}.keras" )
-        self.trained_model = load_model(file_path)
+        
+        try:
+            file_path = os.path.join(directory, f"{self.model_type}_{self.epochs}.keras" )
+            self.trained_model = load_model(file_path)
+            
+        except FileNotFoundError:
+            # File does not exist
+            print(f"Error: Model file doesn't exist in {file_path}")
+            
+        except Exception as e:
+            # General exception
+            print(f"Error loading the model {str(e)}")
         
         
 
@@ -73,28 +83,5 @@ class Model(object):
         # Classification report and confusion matrix
         print("Classification Report:\n", classification_report(y_true, y_pred_classes))
         print("Confusion Matrix:\n", confusion_matrix(y_true, y_pred_classes))
-    
-def main():
-    
-    
-    vgg_16_10_ep_model = Model("vgg16", 10)
-    train_aug, X_test, y_test = get_preprocessed_data()
-    
-    #Train and save
-    # vgg_16_10_ep_model.create_model(train_aug, X_test, y_test)
-    # vgg_16_10_ep_model.evaluate_model(X_test, y_test)
-    # vgg_16_10_ep_model.persist_model("../trained_models/")
-    
-    
-    #Load trained model
-    vgg_16_10_ep_model = Model("vgg16", 10)
-    vgg_16_10_ep_model.load_model("../trained_models/")
-    vgg_16_10_ep_model.evaluate_model(X_test, y_test)
-    
-    
-    
-    
-    
-    
-if __name__=="__main__":
-    main()
+        
+        
