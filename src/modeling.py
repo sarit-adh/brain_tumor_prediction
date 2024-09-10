@@ -1,49 +1,99 @@
 
 from preprocessing import get_preprocessed_data
-from tensorflow.keras.applications import VGG16
-from tensorflow.keras.models import Sequential
+from tensorflow.keras.applications import VGG16, VGG19
+from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import Dense, Flatten, Dropout
 from sklearn.metrics import classification_report, confusion_matrix
 import numpy as np
+import os
 
-def create_model(train_aug, X_val, y_val):
+class Model(object):
     
+    def __init__(self, model_type, epochs):
+        self.model_type = model_type
+        self.epochs = epochs
+        self.trained_model = None
     
-    # Building a model using Transfer Learning (VGG16)
-    base_model = VGG16(weights='imagenet', include_top=False, input_shape=(128, 128, 3))
-    base_model.trainable = False
+    def create_model(self, train_aug, X_val, y_val):
+        
+        if self.trained_model:
+            return self.trained_model
+        
+        
+        if self.model_type== "vgg16":
+            # Building a base model using Transfer Learning (VGG16)
+            base_model = VGG16(weights='imagenet', include_top=False, input_shape=(128, 128, 3))
+            base_model.trainable = False
+        
+        if self.model_type== "vgg19":
+            # Building a base model using Transfer Learning (VGG19)
+            base_model = VGG19(weights='imagenet', include_top=False, input_shape=(128, 128, 3))
+            base_model.trainable = False
+            
 
-    model = Sequential()
-    model.add(base_model)
-    model.add(Flatten())
-    model.add(Dense(256, activation='relu'))
-    model.add(Dropout(0.5))
-    model.add(Dense(2, activation='softmax'))
+        model = Sequential()
+        model.add(base_model)
+        model.add(Flatten())
+        model.add(Dense(256, activation='relu'))
+        model.add(Dropout(0.5))
+        model.add(Dense(2, activation='softmax'))
 
-    model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+        model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-    # Train the model
-    model.fit(train_aug, epochs=10, validation_data=(X_val, y_val))
+        # Train the model
+        model.fit(train_aug, epochs=self.epochs, validation_data=(X_val, y_val))
+        
+        self.trained_model =  model
     
-    return model
+    def persist_model(self, directory):
+        
+        if not self.trained_model:
+            print("Model not trained!!")
+        
+        file_path = os.path.join(directory, f"{self.model_type}_{self.epochs}.keras" )
+        self.trained_model.save(file_path)
+        
+    def load_model(self, directory):
+        file_path = os.path.join(directory, f"{self.model_type}_{self.epochs}.keras" )
+        self.trained_model = load_model(file_path)
+        
+        
 
 
-def evaluate_model(model, X_test, y_test):
-    
-    # Get prediction
-    y_pred = model.predict(X_test)
-    y_pred_classes = np.argmax(y_pred, axis=1)
-    y_true = np.argmax(y_test, axis=1)
-    
-    # Classification report and confusion matrix
-    print("Classification Report:\n", classification_report(y_true, y_pred_classes))
-    print("Confusion Matrix:\n", confusion_matrix(y_true, y_pred_classes))
+    def evaluate_model(self, X_test, y_test):
+        
+        if not self.trained_model:
+            print("Model not trained!!")
+        
+        # Get prediction
+        y_pred = self.trained_model.predict(X_test)
+        y_pred_classes = np.argmax(y_pred, axis=1)
+        y_true = np.argmax(y_test, axis=1)
+        
+        # Classification report and confusion matrix
+        print("Classification Report:\n", classification_report(y_true, y_pred_classes))
+        print("Confusion Matrix:\n", confusion_matrix(y_true, y_pred_classes))
     
 def main():
+    
+    
+    vgg_16_10_ep_model = Model("vgg16", 10)
     train_aug, X_test, y_test = get_preprocessed_data()
     
-    model = create_model(train_aug, X_test, y_test)
-    evaluate_model(model, X_test, y_test)
+    #Train and save
+    # vgg_16_10_ep_model.create_model(train_aug, X_test, y_test)
+    # vgg_16_10_ep_model.evaluate_model(X_test, y_test)
+    # vgg_16_10_ep_model.persist_model("../trained_models/")
+    
+    
+    #Load trained model
+    vgg_16_10_ep_model = Model("vgg16", 10)
+    vgg_16_10_ep_model.load_model("../trained_models/")
+    vgg_16_10_ep_model.evaluate_model(X_test, y_test)
+    
+    
+    
+    
     
     
 if __name__=="__main__":
