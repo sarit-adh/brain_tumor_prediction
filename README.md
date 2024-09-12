@@ -32,4 +32,4 @@ python main.py --task load
 
 
 Example Performance Metrics Comparison
-![plot](./results/figures/pcomparison_vgg16_vgg19.png)
+![plot](./results/figures/comparison_vgg16_vgg19.png)
