@@ -1,4 +1,4 @@
-from data_loader import *
+from src.data_loader import *
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.preprocessing.image import ImageDataGenerator

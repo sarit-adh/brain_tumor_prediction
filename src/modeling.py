@@ -1,10 +1,11 @@
 
-from preprocessing import get_preprocessed_data
+from src.preprocessing import get_preprocessed_data
 from tensorflow.keras.applications import VGG16, VGG19, ResNet50
 from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import Dense, Flatten, Dropout
 from sklearn.metrics import classification_report, confusion_matrix
 import numpy as np
+import cv2
 import os
 
 class Model(object):
@@ -75,9 +76,21 @@ class Model(object):
         except Exception as e:
             # General exception
             print(f"Error loading the model {str(e)}")
+            
+    def predict(self, image_path):
+        
+        image = cv2.imread(image_path)
+        if image is None:
+            print(f"Image {image_path} could not be loaded!!")
+        else:
+            image = cv2.resize(image, (128, 128))
+        
+        X = np.array([image])
+        X = X / 255.0
+        y_pred = self.trained_model.predict(X)
+        return y_pred
         
         
-
 
     def evaluate_model(self, X_test, y_test):
         

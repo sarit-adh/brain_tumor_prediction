@@ -1,4 +1,4 @@
-from modeling import Model
+from src.modeling import Model
 from preprocessing import get_preprocessed_data
 from argparse import ArgumentParser
 from visualization import compare_model_classifications
