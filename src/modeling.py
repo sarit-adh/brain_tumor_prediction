@@ -31,7 +31,7 @@ class Model(object):
             base_model.trainable = False
             
         elif self.model_type== "resnet":
-            # Building a base model using Transfer Learning (VGG19)
+            # Building a base model using Transfer Learning (resnet50)
             base_model = ResNet50(weights='imagenet', include_top=False, input_shape=(128, 128, 3))
             base_model.trainable = False
         
@@ -89,8 +89,13 @@ class Model(object):
         y_pred_classes = np.argmax(y_pred, axis=1)
         y_true = np.argmax(y_test, axis=1)
         
+        
+        
         # Classification report and confusion matrix
         print("Classification Report:\n", classification_report(y_true, y_pred_classes))
         print("Confusion Matrix:\n", confusion_matrix(y_true, y_pred_classes))
+        
+        classification_report_dict = classification_report(y_true, y_pred_classes, output_dict=True)
+        return classification_report_dict
         
         
