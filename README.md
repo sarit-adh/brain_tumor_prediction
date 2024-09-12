@@ -6,6 +6,11 @@ Download data from kaggle
 python download_data_from_kaggle.py
 ```
 
+Set PYTHONPATH to include src folder
+
+```bash
+set PYTHONPATH=%PYTHONPATH%;C:\path\to\project\brain_tumor_prediction\src
+```
 
 Train the model
 
