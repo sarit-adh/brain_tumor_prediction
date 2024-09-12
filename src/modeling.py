@@ -1,6 +1,6 @@
 
 from preprocessing import get_preprocessed_data
-from tensorflow.keras.applications import VGG16, VGG19
+from tensorflow.keras.applications import VGG16, VGG19, ResNet50
 from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import Dense, Flatten, Dropout
 from sklearn.metrics import classification_report, confusion_matrix
@@ -25,10 +25,19 @@ class Model(object):
             base_model = VGG16(weights='imagenet', include_top=False, input_shape=(128, 128, 3))
             base_model.trainable = False
         
-        if self.model_type== "vgg19":
+        elif self.model_type== "vgg19":
             # Building a base model using Transfer Learning (VGG19)
             base_model = VGG19(weights='imagenet', include_top=False, input_shape=(128, 128, 3))
             base_model.trainable = False
+            
+        elif self.model_type== "resnet":
+            # Building a base model using Transfer Learning (VGG19)
+            base_model = ResNet50(weights='imagenet', include_top=False, input_shape=(128, 128, 3))
+            base_model.trainable = False
+        
+        else:
+            print("{self.model_type} yet not supported")
+        
             
 
         model = Sequential()
