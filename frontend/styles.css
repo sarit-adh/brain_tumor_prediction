@@ -1,0 +1,17 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 50px;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+form {
+    margin-top: 20px;
+}
+
+#predictionResult {
+    font-weight: bold;
+    color: blue;
+}

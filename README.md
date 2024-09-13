@@ -38,3 +38,4 @@ python main.py --task load
 
 Example Performance Metrics Comparison
 ![plot](./results/figures/comparison_vgg16_vgg19.png)
+

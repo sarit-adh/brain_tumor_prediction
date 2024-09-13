@@ -21,7 +21,6 @@ async def predict(
     
     with open(file_save_path, "wb+") as outfile:
         outfile.write(image_file.file.read())
-        
     model = Model(base_model_name, epochs)
     model.load_model("../trained_models/")
     prediction = str(model.predict( file_save_path))

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Tumor Image Prediction</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Upload an Image and Get a Prediction</h1>
+    
+    <form id="uploadForm">
+        <label for="model">Choose a model:</label>
+        <select id="model">
+            <!-- Models will be populated here dynamically from the API -->
+        </select>
+        <br><br>
+
+        <input type="file" id="fileInput" required>
+        <br><br>
+
+        <input type="submit" value="Upload and Predict">
+    </form>
+
+    <h2>Prediction Result:</h2>
+    <p id="predictionResult"></p>
+
+    <script src="app.js"></script>
+</body>
+</html>
