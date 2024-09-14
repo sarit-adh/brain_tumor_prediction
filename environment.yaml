@@ -1,0 +1,4 @@
+name: kaggle-env
+channels:
+  - defaults
+prefix: C:\Users\Public\Anaconda3\envs\kaggle-env

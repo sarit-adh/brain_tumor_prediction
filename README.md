@@ -1,5 +1,23 @@
-### Usage
+## Setup
+Clone the repository and execute following commands to set up environment and dependencies
 
+Create the Conda environment using environment.yaml
+
+```bash
+conda env create -f environment.yaml
+```
+
+use pip to install dependencies listed in requirements.txt
+
+```bash
+pip install -r requirements.txt
+```
+
+Next, obtain kaggle access key , then set username and access key environment variables. Follow instructions from "API credentials" section of following document
+https://github.com/Kaggle/kaggle-api/blob/main/docs/README.md
+
+
+## Data
 Download data from kaggle
 
 ```bash
@@ -11,6 +29,8 @@ Set PYTHONPATH to include src folder
 ```bash
 set PYTHONPATH=%PYTHONPATH%;C:\path\to\project\brain_tumor_prediction\src
 ```
+
+## Usage
 
 Train the model
 
@@ -24,7 +44,7 @@ Load the trained model
 python main.py --task load
 ```
 
-### Command-Line Arguments
+## Command-Line Arguments
 
 | Argument      | Type   | Default               | Description                                                                                                                                  |
 |---------------|--------|-----------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
@@ -38,4 +58,30 @@ python main.py --task load
 
 Example Performance Metrics Comparison
 ![plot](./results/figures/comparison_vgg16_vgg19.png)
+
+
+## Using API and frontend
+
+When you have trained models, you can expose prediction via api and use frontend to interact with the api
+
+```
+cd api
+python main.py
+```
+
+This will create api endpoint on port 8080
+
+To run the frontend
+
+```
+cd frontend
+python -m http.server 8000
+```
+
+On your browser, navigate to
+http://127.0.0.1:8000/
+
+Example output
+
+![frontend_image](frontend_image.png)
 
