@@ -23,8 +23,9 @@ async def predict(
         outfile.write(image_file.file.read())
     model = Model(base_model_name, epochs)
     model.load_model("../trained_models/")
-    prediction = str(model.predict( file_save_path))
-    return JSONResponse(content={"prediction": prediction})
+    prediction = model.predict( file_save_path)
+    probability_tumor = str(prediction[0][1])
+    return JSONResponse(content={"prediction": probability_tumor})
 
 
 

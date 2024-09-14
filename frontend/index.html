@@ -3,28 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brain Tumor Image Prediction</title>
+    <title>Brain Tumor Prediction</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Upload an Image and Get a Prediction</h1>
-    
-    <form id="uploadForm">
-        <label for="model">Choose a model:</label>
-        <select id="model">
-            <!-- Models will be populated here dynamically from the API -->
-        </select>
-        <br><br>
 
-        <input type="file" id="fileInput" required>
-        <br><br>
+    <div class="container">
+        <h1>Brain Tumor Prediction: Upload the Image</h1>
 
-        <input type="submit" value="Upload and Predict">
-    </form>
+        <form id="uploadForm">
+            <label for="model">Choose a model:</label>
+            <select id="model">
+                <!-- Models will be populated here dynamically from the API -->
+            </select>
 
-    <h2>Prediction Result:</h2>
-    <p id="predictionResult"></p>
+            <input type="file" id="fileInput" required>
+
+            <input type="submit" value="Upload and Predict">
+        </form>
+
+        <!-- Loader (hidden by default) -->
+        <div id="loading" class="loader" style="display: none;"></div>
+
+        <h2>Prediction Result:</h2>
+        <p id="predictionResult"></p>
+    </div>
 
     <script src="app.js"></script>
+
 </body>
 </html>
